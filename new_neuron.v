@@ -1,3 +1,5 @@
+//  https://github.com/doitdodo/FPGA_Spiking_NN
+
 module simplified_snn #(
     parameter DW = 16, INT_DW = 8, REFRAC = 5, ENCODE_TIME = 23
 )(
@@ -52,4 +54,27 @@ module simplified_snn #(
 			end
 		end
 	 end
+	 
+	 
+	 reg refractory_en;
+    always@(posedge clk) begin
+        if(rst) begin 
+            refractory_cnt <= 0;
+            refractory_en <= 0;
+        end
+        else if(en) begin
+            if(refractory_cnt == REFRAC * ENCODE_TIME) begin
+                refractory_cnt <= 0;
+                refractory_en <= 1'b0;
+            end
+            if(potential >= threshold) begin
+                refractory_en <= 1'b1;
+            end
+            else if (refractory_en) begin
+                refractory_cnt <= refractory_cnt + 1;
+            end
+        end
+    end
+	 
 endmodule
+
