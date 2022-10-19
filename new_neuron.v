@@ -1,6 +1,6 @@
 //  https://github.com/doitdodo/FPGA_Spiking_NN
 
-module simplified_snn #(
+module exc_neuron #(
     parameter DW = 16, INT_DW = 8, REFRAC = 5, ENCODE_TIME = 23
 )(
     // Clock, reset and enable
