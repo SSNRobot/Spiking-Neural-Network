@@ -28,7 +28,7 @@ module synapse #(
     localparam IDLE = 3'b000;
     localparam FORWARD = 3'b001;
     localparam COMPUTE = 3'b010;
-    localparam UPDATE = 3'b011;
+//    localparam UPDATE = 3'b011;
     reg [2 : 0] fsm_state;
     reg [2 : 0] fsm_next_state;
     reg compute_finish;
@@ -57,15 +57,15 @@ module synapse #(
             end
             COMPUTE: begin
                 if(en) begin
-                   if(compute_finish) fsm_next_state = UPDATE;
+                   if(compute_finish) fsm_next_state = FORWARD;
                    else fsm_next_state = fsm_state;
                 end
                 else fsm_next_state = fsm_state;                
             end
-            UPDATE: begin
-                if(en) fsm_next_state = FORWARD;
-                else fsm_next_state = fsm_state;                
-            end
+//            UPDATE: begin
+//                if(en) fsm_next_state = FORWARD;
+//                else fsm_next_state = fsm_state;                
+//            end
             default: fsm_next_state = IDLE;
         endcase
     end
@@ -102,6 +102,7 @@ module synapse #(
             else post_en <= 1'b0;
         end
     end
+	 
 	 
 	 
 
