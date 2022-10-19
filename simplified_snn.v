@@ -1,5 +1,8 @@
+
+
+
 module simplified_snn #(
-    parameter DW = 16, INPUTNUM = 10, EXCNUM = 2, INT_DW = 8
+    parameter DW = 16, INPUTNUM = 4, EXCNUM = 2, INT_DW = 8
 )(
     // Clock, reset and enable
     input wire clk,
@@ -50,13 +53,7 @@ module simplified_snn #(
             synapses_results[0][h]+
             synapses_results[1][h]+
             synapses_results[2][h]+
-            synapses_results[3][h]+
-            synapses_results[4][h]+
-            synapses_results[5][h]+
-            synapses_results[6][h]+
-            synapses_results[7][h]+
-            synapses_results[8][h]+
-            synapses_results[9][h];
+            synapses_results[3][h];
         end
     endgenerate
     
