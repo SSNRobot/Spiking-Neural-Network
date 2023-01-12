@@ -93,12 +93,12 @@ module input_neuron #(
 	 input wire Sensor_input,
 	 input wire Material_type,
 	 
-	 output wire Pre_spike
+	 output reg Pre_spike
 	 
 );
 
 	wire potential;
-	wire spike;
+	reg spike;
 	
 	assign potential = Sensor_input;
 	
@@ -106,17 +106,17 @@ module input_neuron #(
 	begin
 	
 	if((Material_type > 500) && (Sensor_input < 700)) begin  //change values to 12 bit from 10 bit   and)
-		assign spike <= 1;
+		assign spike = 1;
 	end
 	else if((Material_type < 500) && (Sensor_input > 275)) begin
-		spike = VCC;
+		assign spike = 1;
 	end
 	else begin
-		spike <= GND;
+		spike <= 0;
 	end
 	
 	
-	assign Pre_spike = spike;
+	Pre_spike <= spike;
 	
 	end
 endmodule
