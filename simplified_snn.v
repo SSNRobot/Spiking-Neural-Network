@@ -36,17 +36,17 @@ module simplified_snn #(
     input_neuron Far_Right (clk,rst,en,Sensor_input[3],Material_type[3],Pre_spike[3]);
     
 
-    synapse syn1_1 (.clk(clk), .rst(rst), .en(en), .weights_w(394), .pre_spiking(Pre_spike[0]),.spking_value(synapses_results[0][0]));
-    synapse syn1_2 (.clk(clk), .rst(rst), .en(en), .weights_w(144), .pre_spiking(Pre_spike[0]),.spking_value(synapses_results[0][1]));
+    synapse syn1_1 (.clk(clk), .rst(rst), .en(en), .weights_w(1615585), .pre_spiking(Pre_spike[0]),.spking_value(synapses_results[0][0]));
+    synapse syn1_2 (.clk(clk), .rst(rst), .en(en), .weights_w(592018), .pre_spiking(Pre_spike[0]),.spking_value(synapses_results[0][1]));
 	
-    synapse syn2_1 (.clk(clk), .rst(rst), .en(en), .weights_w(626), .pre_spiking(Pre_spike[1]),.spking_value(synapses_results[1][0]));
-    synapse syn2_2 (.clk(clk), .rst(rst), .en(en), .weights_w(-37), .pre_spiking(Pre_spike[1]),.spking_value(synapses_results[1][1]));
+    synapse syn2_1 (.clk(clk), .rst(rst), .en(en), .weights_w(2564138), .pre_spiking(Pre_spike[1]),.spking_value(synapses_results[1][0]));
+    synapse syn2_2 (.clk(clk), .rst(rst), .en(en), .weights_w(-153494), .pre_spiking(Pre_spike[1]),.spking_value(synapses_results[1][1]));
 	
-    synapse syn3_1 (.clk(clk), .rst(rst), .en(en), .weights_w(-21), .pre_spiking(Pre_spike[2]),.spking_value(synapses_results[2][0]));
-    synapse syn3_2 (.clk(clk), .rst(rst), .en(en), .weights_w(898), .pre_spiking(Pre_spike[2]),.spking_value(synapses_results[2][1]));
+    synapse syn3_1 (.clk(clk), .rst(rst), .en(en), .weights_w(-88929), .pre_spiking(Pre_spike[2]),.spking_value(synapses_results[2][0]));
+    synapse syn3_2 (.clk(clk), .rst(rst), .en(en), .weights_w(3681132), .pre_spiking(Pre_spike[2]),.spking_value(synapses_results[2][1]));
 	
-    synapse syn4_1 (.clk(clk), .rst(rst), .en(en), .weights_w(138), .pre_spiking(Pre_spike[3]),.spking_value(synapses_results[3][0]));
-    synapse syn4_2 (.clk(clk), .rst(rst), .en(en), .weights_w(553), .pre_spiking(Pre_spike[3]),.spking_value(synapses_results[3][1]));
+    synapse syn4_1 (.clk(clk), .rst(rst), .en(en), .weights_w(568763), .pre_spiking(Pre_spike[3]),.spking_value(synapses_results[3][0]));
+    synapse syn4_2 (.clk(clk), .rst(rst), .en(en), .weights_w(2266863), .pre_spiking(Pre_spike[3]),.spking_value(synapses_results[3][1]));
 	
 	
     assign after_sum[0] = synapses_results[0][0] + synapses_results[1][0] + synapses_results[2][0] + synapses_results[3][0];
