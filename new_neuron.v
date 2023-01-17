@@ -47,10 +47,13 @@ module exc_neuron  #(   //output neuron
 	 
 	 assign out_time = (out_value / 2) * 1563;
 	 
+	 //call frequency divider
+	 
+	 //divide frequency divider result by out time and set to out spike
+	 
 
 	 
 endmodule
-
 
 
 module input_neuron #(
