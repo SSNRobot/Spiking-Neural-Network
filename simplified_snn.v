@@ -9,12 +9,14 @@ module simplified_snn #(
     input wire rst,
     input wire en,
 	 input wire[0:3] Sensor_input,
-	 input wire[0:3] Material_type
+	 output wire[EXCNUM - 1 : 0] Output_spike 
+	 
     );
-    
+	 
+    wire [9:0] Material_type[3:0];
     wire signed [DW + INT_DW - 1 : 0] synapses_results [INPUTNUM - 1 : 0][EXCNUM - 1 : 0];
     wire signed [DW + INT_DW - 1 : 0] after_sum [EXCNUM - 1 : 0];
-    wire Output_spike [EXCNUM - 1 : 0];
+ 
     wire spike_inh;
 	 
 	 wire Pre_spike[0:3];
@@ -28,6 +30,11 @@ module simplified_snn #(
     end
     wire en_for_initweights;
     assign en_for_initweights = weights_en ^ en;
+	 
+	 assign Material_type[0] = 150;
+	 assign Material_type[1] = 750;
+	 assign Material_type[2] = 750;
+	 assign Material_type[3] = 150;
       
 	 
 	 input_neuron Far_Left (clk,rst,en,Sensor_input[0],Material_type[0],Pre_spike[0]);
