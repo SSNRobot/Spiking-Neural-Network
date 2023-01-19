@@ -20,7 +20,9 @@ module exc_neuron  #(   //output neuron
     );
     
   
-    localparam reset_v = 24'd0;
+
+	 localparam threshold = 16'h0000;  //16 bit hex number
+	 reg [3 : 0] refractory_cnt;
 	 
 	 reg signed [15 : 0] potential;    //16 bit number
     reg [15 : 0] out_value;
@@ -39,17 +41,43 @@ module exc_neuron  #(   //output neuron
 				
 		end
 		
-		count <= count + 1;
+		if(en) begin
+            if(refractory_cnt == 4'd0) begin
+                potential <= potential + spiking_value;
+                
+                if(potential >= threshold) begin
+                    potential <= 16'b0;
+                    out_spike <= 1'b1;
+                end
+                else out_spike <= 1'b0;
+            end
+            else begin
+                potential <= potential;         
+                out_spike <= 1'b0; 
+            end
+        end
 		
 	 end
 	 
-	 assign out_value = potential / 8388608;  //need to change number
-	 
-	 assign out_time = (out_value / 2) * 1563;
-	 
-	 //call frequency divider
-	 
-	 //divide frequency divider result by out time and set to out spike
+	 reg refractory_en;
+    always@(posedge clk) begin
+        if(rst) begin 
+            refractory_cnt <= 0;
+            refractory_en <= 0;
+        end
+        else if(en) begin
+            if(refractory_cnt == 100) begin   //100 clock cycle delay, which makes 2us delay
+                refractory_cnt <= 0;
+                refractory_en <= 1'b0;
+            end
+            if(potential >= threshold) begin
+                refractory_en <= 1'b1;
+            end
+            else if (refractory_en) begin
+                refractory_cnt <= refractory_cnt + 1;
+            end
+        end
+    end
 	 
 
 	 
