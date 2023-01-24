@@ -21,8 +21,8 @@ module exc_neuron  #(   //output neuron
     
   
 
-	 localparam threshold = 16'h0000;  //16 bit hex number
-	 reg [3 : 0] refractory_cnt;
+	 localparam threshold = 16'h2710;  //16 bit hex number
+	 reg [3 : 0] refractory_cnt = 4'd0;
 	 
 	 reg signed [15 : 0] potential;    //16 bit number
     reg [15 : 0] out_value;
@@ -59,25 +59,25 @@ module exc_neuron  #(   //output neuron
 		
 	 end
 	 
-	 reg refractory_en;
-    always@(posedge clk) begin
-        if(rst) begin 
-            refractory_cnt <= 0;
-            refractory_en <= 0;
-        end
-        else if(en) begin
-            if(refractory_cnt == 100) begin   //100 clock cycle delay, which makes 2us delay
-                refractory_cnt <= 0;
-                refractory_en <= 1'b0;
-            end
-            if(potential >= threshold) begin
-                refractory_en <= 1'b1;
-            end
-            else if (refractory_en) begin
-                refractory_cnt <= refractory_cnt + 1;
-            end
-        end
-    end
+//	 reg refractory_en;
+//    always@(posedge clk) begin
+//        if(rst) begin 
+//            refractory_cnt <= 0;
+//            refractory_en <= 0;
+//        end
+//        else if(en) begin
+//            if(refractory_cnt == 2) begin   //100 clock cycle delay, which makes 2us delay
+//                refractory_cnt <= 0;
+//                refractory_en <= 1'b0;
+//            end
+//            if(potential >= threshold) begin
+//                refractory_en <= 1'b1;
+//            end
+//            else if (refractory_en) begin
+//                refractory_cnt <= refractory_cnt + 1;
+//            end
+//        end
+//    end
 	 
 
 	 
@@ -94,8 +94,8 @@ module input_neuron #(
     input wire rst,
     input wire en,
     
-	 input wire Sensor_input,
-	 input wire Material_type,
+	 input wire[11:0] Sensor_input,
+	 input wire[9:0] Material_type,
 	 
 	 output reg Pre_spike
 	 
@@ -110,10 +110,10 @@ module input_neuron #(
 	begin
 	
 	if((Material_type > 500) && (Sensor_input < 700)) begin  //change values to 12 bit from 10 bit   and)
-		assign spike = 1;
+		spike <= 1;
 	end
 	else if((Material_type < 500) && (Sensor_input > 275)) begin
-		assign spike = 1;
+		spike <= 1;
 	end
 	else begin
 		spike <= 0;
@@ -124,4 +124,5 @@ module input_neuron #(
 	
 	end
 endmodule
+
 
