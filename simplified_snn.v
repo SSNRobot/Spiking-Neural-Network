@@ -19,6 +19,9 @@ module simplified_snn #(
     wire [9:0] Material_type[3:0];
     wire signed [15 : 0] synapses_results [INPUTNUM - 1 : 0][EXCNUM - 1 : 0];
     wire signed [15 : 0] after_sum [EXCNUM - 1 : 0];
+	 
+	 wire clock_signal;
+	 reg[7:0] spike_count[1:0];
  
     wire spike_inh;
 	 
@@ -65,5 +68,12 @@ module simplified_snn #(
 	
     exc_neuron Left (clk,rst,en,after_sum[0],Output_spike[0]);
     exc_neuron Right (clk,rst,en,after_sum[1],Output_spike[1]);
+	 
+	 frequency_divider(.clk(clk), .rst(rst), .out(clock_signal));
+	 
+	 always@(posedge clock_signal) begin
+		
+	 end
+	 
     
 endmodule
