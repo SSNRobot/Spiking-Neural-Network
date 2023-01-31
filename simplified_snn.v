@@ -1,6 +1,4 @@
 
-
-
 module simplified_snn #(
     parameter DW = 16, INPUTNUM = 4, EXCNUM = 2, INT_DW = 8
 )(
@@ -12,7 +10,7 @@ module simplified_snn #(
 	 input wire[11:0] Sensor_input_ml,
 	 input wire[11:0] Sensor_input_mr,
 	 input wire[11:0] Sensor_input_fr,
-	 output wire[EXCNUM - 1 : 0] Output_spike 
+	 output wire[EXCNUM - 1 : 0] Output_spike
 	 
     );
 	 
@@ -20,14 +18,7 @@ module simplified_snn #(
     wire signed [15 : 0] synapses_results [INPUTNUM - 1 : 0][EXCNUM - 1 : 0];
     wire signed [15 : 0] after_sum [EXCNUM - 1 : 0];
 	 
-	 wire clock_signal;
-	 reg[7:0] spike_count[1:0];
- 
-    wire spike_inh;
-	 
 	 wire Pre_spike[0:3];
-    
-		assign spike_inh = 0;
     
     reg weights_en;
     always@(posedge clk) begin
@@ -68,12 +59,6 @@ module simplified_snn #(
 	
     exc_neuron Left (clk,rst,en,after_sum[0],Output_spike[0]);
     exc_neuron Right (clk,rst,en,after_sum[1],Output_spike[1]);
-	 
-	 frequency_divider(.clk(clk), .rst(rst), .out(clock_signal));
-	 
-	 always@(posedge clock_signal) begin
-		
-	 end
 	 
     
 endmodule
