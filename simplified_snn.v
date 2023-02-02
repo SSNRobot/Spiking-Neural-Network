@@ -10,13 +10,16 @@ module simplified_snn #(
 	 input wire[11:0] Sensor_input_ml,
 	 input wire[11:0] Sensor_input_mr,
 	 input wire[11:0] Sensor_input_fr,
-	 output wire[EXCNUM - 1 : 0] Output_spike
+	output wire[EXCNUM - 1 : 0] Output_spike,
+	output wire [9:0] spike_cnt0			// spike count variables
+	output wire [9:0] spike_cnt1
 	 
     );
 	 
     wire [9:0] Material_type[3:0];
     wire signed [15 : 0] synapses_results [INPUTNUM - 1 : 0][EXCNUM - 1 : 0];
     wire signed [15 : 0] after_sum [EXCNUM - 1 : 0];
+	wire out_en;						// 20 kHz enable pin
 	 
 	 wire Pre_spike[0:3];
     
@@ -59,6 +62,10 @@ module simplified_snn #(
 	
     exc_neuron Left (clk,rst,en,after_sum[0],Output_spike[0]);
     exc_neuron Right (clk,rst,en,after_sum[1],Output_spike[1]);
+	
+	frequency_divider en_20k (clk,reset,out_en);			// 20 kHz freq for 50 us cycles
 	 
+	spike_counter (clk,out_en,Output_spike[0],reset,spike_cnt0);	// Left spike counter
+	spike_counter (clk,out_en,Output_spike[1],reset,spike_cnt1);	// Right spike counter
     
 endmodule
