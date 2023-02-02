@@ -31,10 +31,10 @@ module simplified_snn #(
     wire en_for_initweights;
     assign en_for_initweights = weights_en ^ en;
 	 
-	 assign Material_type[0] = 150;
-	 assign Material_type[1] = 750;
-	 assign Material_type[2] = 750;
-	 assign Material_type[3] = 150;
+	assign Material_type[0] = 600; //150;
+	assign Material_type[1] = 3000; //750;
+	assign Material_type[2] = 3000; //750;
+	assign Material_type[3] = 600; //150;
       
 	 
 	 input_neuron Far_Left (clk,rst,en,Sensor_input_fl,Material_type[0],Pre_spike[0]);
