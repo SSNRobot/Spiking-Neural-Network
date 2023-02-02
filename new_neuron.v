@@ -109,10 +109,10 @@ module input_neuron #(
 	always @(posedge clk) 
 	begin
 	
-	if((Material_type > 500) && (Sensor_input < 700)) begin  //change values to 12 bit from 10 bit   and)
+		if((Material_type > 2000) && (Sensor_input < 2800)) begin  //change values to 12 bit from 10 bit   and)
 		spike <= 1;
 	end
-	else if((Material_type < 500) && (Sensor_input > 275)) begin
+		else if((Material_type < 2000) && (Sensor_input > 1100)) begin
 		spike <= 1;
 	end
 	else begin
