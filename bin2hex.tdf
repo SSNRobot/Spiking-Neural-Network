@@ -1,0 +1,39 @@
+%	This is a Binary to  HEX 7-segment digit decoder/driver
+	The dispaly is Common Anode, requiring ACTIVE-LOW outputs.
+	
+	Fill in the bit patterns to create the proper display digits.
+	See the work sheet from class 
+	
+	ECET 229
+	Lab 4 Thursday 09:30
+	N.S. Widmer & Ronell Chakola
+	Sept 7, 2021  09/15/2021%
+
+SUBDESIGN bin2hex
+(	binary[3..0]				:INPUT;
+	7_seg[6..0]					:OUTPUT;	)   -- Note: order is g .. a
+	
+BEGIN
+-- NOTE:  Segments are ACTIVE-LOW:  A LOW turns them ON!		
+	TABLE						-- convert Binary to 7-seg patterns
+		binary[]	=>	7_seg[];	
+		0			=>	B"1000000";		-- 0   displays a 7-segment pattern for 0 (segments a-f on)
+		1			=>	B"1111001";		-- 1
+		2			=>	B"0100100";		-- 2
+		3			=>	B"0110000";		-- 3
+		4			=>	B"0011001";		-- 4
+		5			=>	B"0010010";		-- 5
+		6			=>	B"0000010";		-- 6
+		7			=>	B"1111000";		-- 7
+		8			=>	B"0000000";		-- 8
+		9			=>	B"0010000";		-- 9
+		10			=>	B"0001000";		-- A
+		11			=>	B"0000011";		-- B
+		12			=>	B"1000110";		-- C
+		13			=>	B"0100001";		-- D
+		14			=>	B"0000110";		-- E
+		15			=>	B"0001110";		-- F
+	END TABLE;
+END;
+	
+	
