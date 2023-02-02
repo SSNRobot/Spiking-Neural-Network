@@ -65,7 +65,7 @@ module simplified_snn #(
 	
 	frequency_divider en_20k (clk,reset,out_en);			// 20 kHz freq for 50 us cycles
 	 
-	spike_counter (clk,out_en,Output_spike[0],reset,spike_cnt0);	// Left spike counter
-	spike_counter (clk,out_en,Output_spike[1],reset,spike_cnt1);	// Right spike counter
+	spike_counter Left (clk,out_en,Output_spike[0],reset,spike_cnt0);	// Left spike counter
+	spike_counter Right (clk,out_en,Output_spike[1],reset,spike_cnt1);	// Right spike counter
     
 endmodule
