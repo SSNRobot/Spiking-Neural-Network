@@ -12,14 +12,14 @@ module synapse #(
     input wire en,
     
     // Write or read weights in synapses
-    input wire [DW - 1 : 0] weights_w,
+    input wire signed [15 : 0] weights_w,
     //input wire write_enable,
    // output reg [DW - 1 : 0] weights_r,
     //input wire read_enable,
     
     // Input spiking and output value
     input wire pre_spiking,
-    output reg signed [DW - 1 : 0] spking_value
+    output reg signed [15 : 0] spking_value
     //output reg post_en,
     
     // Update weights control. Update_lock is used for locking the pre neurons to avoid write & read weights simultaneously

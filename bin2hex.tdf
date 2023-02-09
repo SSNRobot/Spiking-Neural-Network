@@ -35,5 +35,3 @@ BEGIN
 		15			=>	B"0001110";		-- F
 	END TABLE;
 END;
-	
-	
