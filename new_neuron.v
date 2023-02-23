@@ -21,18 +21,18 @@ module exc_neuron  #(   //output neuron
     
   
 
-	 localparam threshold = 16'h2710;  //16 bit hex number
-	 reg [3 : 0] refractory_cnt = 4'd0;
+	 localparam signed threshold = 16'h00F0;//16'h0040;  //16 bit hex number
+	 reg [15 : 0] refractory_cnt = 16'd0;
+//	 reg refractory_en;
 	 
 	 reg signed [15 : 0] potential;    //16 bit number
-    reg [15 : 0] out_value;
-	 reg [15 : 0] out_time;
-	// reg [31 : 0] count;
 	 
 	 always@(posedge clk) begin
 		if (rst) begin
 			potential <= 0;
          out_spike <= 0;
+//         refractory_cnt <= 0;
+//         refractory_en <= 0;
 
 		end
 		else if (en) begin
@@ -42,12 +42,13 @@ module exc_neuron  #(   //output neuron
 		end
 		
 		if(en) begin
-            if(refractory_cnt == 4'd0) begin
+            if(refractory_cnt == 16'd0) begin
                 potential <= potential + spiking_value;
                 
-                if(potential >= threshold) begin
+                if((potential >= threshold) ) begin//&& potential >= 0) begin
                     potential <= 16'b0;
                     out_spike <= 1'b1;
+//         		     refractory_en <= 1'b1;
                 end
                 else out_spike <= 1'b0;
             end
@@ -55,29 +56,17 @@ module exc_neuron  #(   //output neuron
                 potential <= potential;         
                 out_spike <= 1'b0; 
             end
-        end
-		
-	 end
-	 
-//	 reg refractory_en;
-//    always@(posedge clk) begin
-//        if(rst) begin 
-//            refractory_cnt <= 0;
-//            refractory_en <= 0;
-//        end
-//        else if(en) begin
-//            if(refractory_cnt == 2) begin   //100 clock cycle delay, which makes 2us delay
+//				if(refractory_cnt == 50) begin   //100 clock cycle delay, which makes 2us delay
 //                refractory_cnt <= 0;
 //                refractory_en <= 1'b0;
-//            end
-//            if(potential >= threshold) begin
-//                refractory_en <= 1'b1;
 //            end
 //            else if (refractory_en) begin
 //                refractory_cnt <= refractory_cnt + 1;
 //            end
-//        end
-//    end
+        end
+		
+	 end
+	 
 	 
 
 	 
@@ -101,7 +90,7 @@ module input_neuron #(
 	 
 );
 
-	wire potential;
+	wire [11:0] potential;
 	reg spike;
 	
 	assign potential = Sensor_input;
@@ -109,10 +98,10 @@ module input_neuron #(
 	always @(posedge clk) 
 	begin
 	
-		if((Material_type > 2000) && (Sensor_input < 2800)) begin  //change values to 12 bit from 10 bit   and)
+	if((Material_type > 2000) && (Sensor_input < 2800)) begin  //change values to 12 bit from 10 bit   and)
 		spike <= 1;
 	end
-		else if((Material_type < 2000) && (Sensor_input > 1100)) begin
+	else if((Material_type < 2000) && (Sensor_input > 1100)) begin
 		spike <= 1;
 	end
 	else begin
@@ -124,5 +113,4 @@ module input_neuron #(
 	
 	end
 endmodule
-
 

@@ -10,16 +10,15 @@ module simplified_snn #(
 	 input wire[11:0] Sensor_input_ml,
 	 input wire[11:0] Sensor_input_mr,
 	 input wire[11:0] Sensor_input_fr,
-	output wire[EXCNUM - 1 : 0] Output_spike,
-	output wire [9:0] spike_cnt0			// spike count variables
-	output wire [9:0] spike_cnt1
+	 output wire[EXCNUM - 1 : 0] Output_spike
 	 
     );
 	 
     wire [9:0] Material_type[3:0];
     wire signed [15 : 0] synapses_results [INPUTNUM - 1 : 0][EXCNUM - 1 : 0];
     wire signed [15 : 0] after_sum [EXCNUM - 1 : 0];
-	wire out_en;						// 20 kHz enable pin
+	 
+	 wire out_en;
 	 
 	 wire Pre_spike[0:3];
     
@@ -31,10 +30,10 @@ module simplified_snn #(
     wire en_for_initweights;
     assign en_for_initweights = weights_en ^ en;
 	 
-	assign Material_type[0] = 600; //150;
-	assign Material_type[1] = 3000; //750;
-	assign Material_type[2] = 3000; //750;
-	assign Material_type[3] = 600; //150;
+	 assign Material_type[0] = 600;
+	 assign Material_type[1] = 3000;
+	 assign Material_type[2] = 3000;
+	 assign Material_type[3] = 600;
       
 	 
 	 input_neuron Far_Left (clk,rst,en,Sensor_input_fl,Material_type[0],Pre_spike[0]);
@@ -43,17 +42,17 @@ module simplified_snn #(
     input_neuron Far_Right (clk,rst,en,Sensor_input_fr,Material_type[3],Pre_spike[3]);
     
 
-    synapse syn1_1 (.clk(clk), .rst(rst), .en(en), .weights_w(1615585), .pre_spiking(Pre_spike[0]),.spking_value(synapses_results[0][0]));
-    synapse syn1_2 (.clk(clk), .rst(rst), .en(en), .weights_w(592018), .pre_spiking(Pre_spike[0]),.spking_value(synapses_results[0][1]));
+    synapse syn1_1 (.clk(clk), .rst(rst), .en(en), .weights_w(29), .pre_spiking(Pre_spike[0]),.spking_value(synapses_results[0][0]));
+    synapse syn1_2 (.clk(clk), .rst(rst), .en(en), .weights_w(47), .pre_spiking(Pre_spike[0]),.spking_value(synapses_results[0][1]));
 	
-    synapse syn2_1 (.clk(clk), .rst(rst), .en(en), .weights_w(2564138), .pre_spiking(Pre_spike[1]),.spking_value(synapses_results[1][0]));
-    synapse syn2_2 (.clk(clk), .rst(rst), .en(en), .weights_w(-153494), .pre_spiking(Pre_spike[1]),.spking_value(synapses_results[1][1]));
+    synapse syn2_1 (.clk(clk), .rst(rst), .en(en), .weights_w(-52), .pre_spiking(Pre_spike[1]),.spking_value(synapses_results[1][0]));
+    synapse syn2_2 (.clk(clk), .rst(rst), .en(en), .weights_w(-41), .pre_spiking(Pre_spike[1]),.spking_value(synapses_results[1][1]));
 	
-    synapse syn3_1 (.clk(clk), .rst(rst), .en(en), .weights_w(-88929), .pre_spiking(Pre_spike[2]),.spking_value(synapses_results[2][0]));
-    synapse syn3_2 (.clk(clk), .rst(rst), .en(en), .weights_w(3681132), .pre_spiking(Pre_spike[2]),.spking_value(synapses_results[2][1]));
+    synapse syn3_1 (.clk(clk), .rst(rst), .en(en), .weights_w(-41), .pre_spiking(Pre_spike[2]),.spking_value(synapses_results[2][0]));
+    synapse syn3_2 (.clk(clk), .rst(rst), .en(en), .weights_w(-53), .pre_spiking(Pre_spike[2]),.spking_value(synapses_results[2][1]));
 	
-    synapse syn4_1 (.clk(clk), .rst(rst), .en(en), .weights_w(568763), .pre_spiking(Pre_spike[3]),.spking_value(synapses_results[3][0]));
-    synapse syn4_2 (.clk(clk), .rst(rst), .en(en), .weights_w(2266863), .pre_spiking(Pre_spike[3]),.spking_value(synapses_results[3][1]));
+    synapse syn4_1 (.clk(clk), .rst(rst), .en(en), .weights_w(46), .pre_spiking(Pre_spike[3]),.spking_value(synapses_results[3][0]));
+    synapse syn4_2 (.clk(clk), .rst(rst), .en(en), .weights_w(29), .pre_spiking(Pre_spike[3]),.spking_value(synapses_results[3][1]));
 	
 	
     assign after_sum[0] = synapses_results[0][0] + synapses_results[1][0] + synapses_results[2][0] + synapses_results[3][0];
@@ -62,10 +61,6 @@ module simplified_snn #(
 	
     exc_neuron Left (clk,rst,en,after_sum[0],Output_spike[0]);
     exc_neuron Right (clk,rst,en,after_sum[1],Output_spike[1]);
-	
-	frequency_divider en_20k (clk,reset,out_en);			// 20 kHz freq for 50 us cycles
 	 
-	spike_counter Left (clk,out_en,Output_spike[0],reset,spike_cnt0);	// Left spike counter
-	spike_counter Right (clk,out_en,Output_spike[1],reset,spike_cnt1);	// Right spike counter
     
 endmodule
