@@ -141,13 +141,13 @@ module synapse #(
     // Beta * w and beta * (wmax - w)
     wire signed [DW - 1 : 0] beta = 16'he667; // -beta, signed, default beta = 0.2
     wire signed [DW : 0] betaw;
-    mult_betaw beta_w (clk,beta,weights,1'b1,betaw);
+    LPM_multiply beta_w (beta,weights,betaw);
     
     wire signed [DW - 1 : 0] wmax = 16'h7fff; // wmax, default value is 1.0
     wire signed [DW - 1 : 0] wmax_w;
     assign wmax_w = wmax - weights;
     wire signed [DW : 0] betawmaxw;
-    mult_betaw beta_wmax_w (clk,beta,wmax_w,1'b1,betawmaxw);
+    LPM_multiply beta_wmax_w (beta,wmax_w,betawmaxw);
     
     // CORDIC
     wire cordic_opa; // 1- CORDIC stops, 0- CORDIC oparates
@@ -208,10 +208,10 @@ module synapse #(
     assign diff = expbetaw - expbetawmax_w;
     wire signed [DW + T_DW + 2 : 0] diff_trace;
 //    assign diff_trace = {1'b0,pre_trace}*diff;
-    mult_gen_0 difftrace (clk, {1'b0,pre_trace_temp}, diff, 1'b1, diff_trace);
+    LPM_multiply difftrace ({1'b0,pre_trace_temp}, diff, diff_trace);
     
     wire signed [DW - 1 : 0] derta_w;
-    mult_gen_1 dertaw (clk,diff_trace[DW + T_DW + 1 : T_DW + 2],learning_rate,derta_w);
+    LPM_multiply dertaw (diff_trace[DW + T_DW + 1 : T_DW + 2],learning_rate,derta_w);
     
     // Update weights or initialize weights
     always@(posedge clk) begin
