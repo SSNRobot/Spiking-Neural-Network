@@ -23,7 +23,7 @@ module simplified_snn #(
     wire signed [15 : 0] after_sum [EXCNUM - 1 : 0];
 	 
     wire out_en;
-    wire Pre_spike[0:3];
+    wire [7:0] Pre_spike[0:3];
     
     reg weights_en;
     always@(posedge clk) begin

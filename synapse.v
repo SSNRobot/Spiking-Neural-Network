@@ -50,7 +50,7 @@ module synapse #(
     input wire read_enable,
     
     // Input spiking and output value
-    input wire pre_spiking,
+    input wire [7:0] pre_spiking,
     output reg signed [DW - 1 : 0] spking_value,
     output reg post_en,
     

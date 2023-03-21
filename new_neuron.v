@@ -21,7 +21,7 @@ module exc_neuron  #(   //output neuron
     
   
 
-	 localparam signed threshold = 16'h00F0;//16'h0040;  //16 bit hex number
+	 localparam signed threshold = 16'h0960;//16'h00F0;  //16 bit hex number
 	 reg [15 : 0] refractory_cnt = 16'd0;
 //	 reg refractory_en;
 	 
@@ -86,30 +86,22 @@ module input_neuron #(
 	 input wire[11:0] Sensor_input,
 	 input wire[9:0] Material_type,
 	 
-	 output reg Pre_spike
+	 output reg [7:0] Pre_spike
 	 
 );
 
 	wire [11:0] potential;
-	reg spike;
+	reg [18:0] spike;
 	
 	assign potential = Sensor_input;
 	
 	always @(posedge clk) 
 	begin
 	
-	if((Material_type > 2000) && (Sensor_input < 2800)) begin  //change values to 12 bit from 10 bit   and)
-		spike <= 1;
-	end
-	else if((Material_type < 2000) && (Sensor_input > 1100)) begin
-		spike <= 1;
-	end
-	else begin
-		spike <= 0;
-	end
+	spike <= potential * 100;
 	
+	Pre_spike <= spike / 4096;
 	
-	Pre_spike <= spike;
 	
 	end
 endmodule
@@ -135,7 +127,7 @@ module hidden_neuron  #(   //output neuron
     
   
 
-	 localparam signed threshold = 16'h00F0;//16'h0040;  //16 bit hex number
+	 localparam signed threshold = 16'h0960;//16'h00F0;  //16 bit hex number
 	 reg [15 : 0] refractory_cnt = 16'd0;
 //	 reg refractory_en;
 	 
