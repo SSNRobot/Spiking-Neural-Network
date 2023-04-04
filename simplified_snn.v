@@ -10,7 +10,7 @@ module simplified_snn #(
 	 input wire[11:0] Sensor_input_ml,
 	 input wire[11:0] Sensor_input_mr,
 	 input wire[11:0] Sensor_input_fr,
-	 output wire[EXCNUM - 1 : 0] Output_spike
+	 output wire[1 : 0] Output_spike
 	 
     );
     wire [3 : 0] hidden_spike;
@@ -45,25 +45,25 @@ module simplified_snn #(
     input_neuron Far_Right (clk,rst,en,Sensor_input_fr,Material_type[3],Pre_spike[3]);
     
 
-    synapse syn1_1 (.clk(clk), .rst(rst), .en(en), .weights_w(-59), .pre_spiking(Pre_spike[0]),.spking_value(synapses_results[0][0]),.update_en(hidden_spike[0]),.learning_rate(16'h0148));
-    synapse syn1_2 (.clk(clk), .rst(rst), .en(en), .weights_w(-98), .pre_spiking(Pre_spike[0]),.spking_value(synapses_results[0][1]),.update_en(hidden_spike[1]),.learning_rate(16'h0148));
-    synapse syn1_3 (.clk(clk), .rst(rst), .en(en), .weights_w(-89), .pre_spiking(Pre_spike[0]),.spking_value(synapses_results[0][2]),.update_en(hidden_spike[2]),.learning_rate(16'h0148));
-    synapse syn1_4 (.clk(clk), .rst(rst), .en(en), .weights_w(-67), .pre_spiking(Pre_spike[0]),.spking_value(synapses_results[0][3]),.update_en(hidden_spike[3]),.learning_rate(16'h0148));
+    synapse syn1_1 (.clk(clk), .rst(rst), .en(en), .weights_w(38), .pre_spiking(Pre_spike[0]),.spking_value(synapses_results[0][0]),.update_en(hidden_spike[0]),.learning_rate(16'h0148));
+    synapse syn1_2 (.clk(clk), .rst(rst), .en(en), .weights_w(-100), .pre_spiking(Pre_spike[0]),.spking_value(synapses_results[0][1]),.update_en(hidden_spike[1]),.learning_rate(16'h0148));
+    synapse syn1_3 (.clk(clk), .rst(rst), .en(en), .weights_w(-31), .pre_spiking(Pre_spike[0]),.spking_value(synapses_results[0][2]),.update_en(hidden_spike[2]),.learning_rate(16'h0148));
+    synapse syn1_4 (.clk(clk), .rst(rst), .en(en), .weights_w(68), .pre_spiking(Pre_spike[0]),.spking_value(synapses_results[0][3]),.update_en(hidden_spike[3]),.learning_rate(16'h0148));
 	
-    synapse syn2_1 (.clk(clk), .rst(rst), .en(en), .weights_w(59), .pre_spiking(Pre_spike[1]),.spking_value(synapses_results[1][0]),.update_en(hidden_spike[0]),.learning_rate(16'h0148));
-    synapse syn2_2 (.clk(clk), .rst(rst), .en(en), .weights_w(-73), .pre_spiking(Pre_spike[1]),.spking_value(synapses_results[1][1]),.update_en(hidden_spike[1]),.learning_rate(16'h0148));
-    synapse syn2_3 (.clk(clk), .rst(rst), .en(en), .weights_w(-13), .pre_spiking(Pre_spike[1]),.spking_value(synapses_results[1][2]),.update_en(hidden_spike[2]),.learning_rate(16'h0148));
-    synapse syn2_4 (.clk(clk), .rst(rst), .en(en), .weights_w(-56), .pre_spiking(Pre_spike[1]),.spking_value(synapses_results[1][3]),.update_en(hidden_spike[3]),.learning_rate(16'h0148));
+    synapse syn2_1 (.clk(clk), .rst(rst), .en(en), .weights_w(-19), .pre_spiking(Pre_spike[1]),.spking_value(synapses_results[1][0]),.update_en(hidden_spike[0]),.learning_rate(16'h0148));
+    synapse syn2_2 (.clk(clk), .rst(rst), .en(en), .weights_w(25), .pre_spiking(Pre_spike[1]),.spking_value(synapses_results[1][1]),.update_en(hidden_spike[1]),.learning_rate(16'h0148));
+    synapse syn2_3 (.clk(clk), .rst(rst), .en(en), .weights_w(32), .pre_spiking(Pre_spike[1]),.spking_value(synapses_results[1][2]),.update_en(hidden_spike[2]),.learning_rate(16'h0148));
+    synapse syn2_4 (.clk(clk), .rst(rst), .en(en), .weights_w(2), .pre_spiking(Pre_spike[1]),.spking_value(synapses_results[1][3]),.update_en(hidden_spike[3]),.learning_rate(16'h0148));
 	
-    synapse syn3_1 (.clk(clk), .rst(rst), .en(en), .weights_w(-51), .pre_spiking(Pre_spike[2]),.spking_value(synapses_results[2][0]),.update_en(hidden_spike[0]),.learning_rate(16'h0148));
-    synapse syn3_2 (.clk(clk), .rst(rst), .en(en), .weights_w(98), .pre_spiking(Pre_spike[2]),.spking_value(synapses_results[2][1]),.update_en(hidden_spike[1]),.learning_rate(16'h0148));
-    synapse syn3_3 (.clk(clk), .rst(rst), .en(en), .weights_w(4), .pre_spiking(Pre_spike[2]),.spking_value(synapses_results[2][2]),.update_en(hidden_spike[2]),.learning_rate(16'h0148));
-    synapse syn3_4 (.clk(clk), .rst(rst), .en(en), .weights_w(-97), .pre_spiking(Pre_spike[2]),.spking_value(synapses_results[2][3]),.update_en(hidden_spike[3]),.learning_rate(16'h0148));
+    synapse syn3_1 (.clk(clk), .rst(rst), .en(en), .weights_w(69), .pre_spiking(Pre_spike[2]),.spking_value(synapses_results[2][0]),.update_en(hidden_spike[0]),.learning_rate(16'h0148));
+    synapse syn3_2 (.clk(clk), .rst(rst), .en(en), .weights_w(-2), .pre_spiking(Pre_spike[2]),.spking_value(synapses_results[2][1]),.update_en(hidden_spike[1]),.learning_rate(16'h0148));
+    synapse syn3_3 (.clk(clk), .rst(rst), .en(en), .weights_w(-22), .pre_spiking(Pre_spike[2]),.spking_value(synapses_results[2][2]),.update_en(hidden_spike[2]),.learning_rate(16'h0148));
+    synapse syn3_4 (.clk(clk), .rst(rst), .en(en), .weights_w(-6), .pre_spiking(Pre_spike[2]),.spking_value(synapses_results[2][3]),.update_en(hidden_spike[3]),.learning_rate(16'h0148));
 	
-    synapse syn4_1 (.clk(clk), .rst(rst), .en(en), .weights_w(-42), .pre_spiking(Pre_spike[3]),.spking_value(synapses_results[3][0]),.update_en(hidden_spike[0]),.learning_rate(16'h0148));
-    synapse syn4_2 (.clk(clk), .rst(rst), .en(en), .weights_w(-30), .pre_spiking(Pre_spike[3]),.spking_value(synapses_results[3][1]),.update_en(hidden_spike[1]),.learning_rate(16'h0148));
-    synapse syn4_3 (.clk(clk), .rst(rst), .en(en), .weights_w(-74), .pre_spiking(Pre_spike[3]),.spking_value(synapses_results[3][2]),.update_en(hidden_spike[2]),.learning_rate(16'h0148));
-    synapse syn4_4 (.clk(clk), .rst(rst), .en(en), .weights_w(33), .pre_spiking(Pre_spike[3]),.spking_value(synapses_results[3][3]),.update_en(hidden_spike[3]),.learning_rate(16'h0148));
+    synapse syn4_1 (.clk(clk), .rst(rst), .en(en), .weights_w(18), .pre_spiking(Pre_spike[3]),.spking_value(synapses_results[3][0]),.update_en(hidden_spike[0]),.learning_rate(16'h0148));
+    synapse syn4_2 (.clk(clk), .rst(rst), .en(en), .weights_w(76), .pre_spiking(Pre_spike[3]),.spking_value(synapses_results[3][1]),.update_en(hidden_spike[1]),.learning_rate(16'h0148));
+    synapse syn4_3 (.clk(clk), .rst(rst), .en(en), .weights_w(-8), .pre_spiking(Pre_spike[3]),.spking_value(synapses_results[3][2]),.update_en(hidden_spike[2]),.learning_rate(16'h0148));
+    synapse syn4_4 (.clk(clk), .rst(rst), .en(en), .weights_w(-53), .pre_spiking(Pre_spike[3]),.spking_value(synapses_results[3][3]),.update_en(hidden_spike[3]),.learning_rate(16'h0148));
 	
 	
     assign init_sum[0] = synapses_results[0][0] + synapses_results[1][0] + synapses_results[2][0] + synapses_results[3][0];
@@ -78,17 +78,17 @@ module simplified_snn #(
     hidden_neuron neu_4(clk,rst,en,init_sum[3],hidden_spike[3]);
 	
 	
-    synapse ex_syn1_1(.clk(clk), .rst(rst), .en(en), .weights_w(1), .pre_spiking(hidden_spike[0]),.spking_value(ex_syn_res[0][0]),.update_en(Output_spike[0]),.learning_rate(16'h0148));
-    synapse ex_syn1_2(.clk(clk), .rst(rst), .en(en), .weights_w(-60), .pre_spiking(hidden_spike[0]),.spking_value(ex_syn_res[0][1]),.update_en(Output_spike[1]),.learning_rate(16'h0148));
+    synapse ex_syn1_1(.clk(clk), .rst(rst), .en(en), .weights_w(-67), .pre_spiking(hidden_spike[0]),.spking_value(ex_syn_res[0][0]),.update_en(Output_spike[0]),.learning_rate(16'h0148));
+    synapse ex_syn1_2(.clk(clk), .rst(rst), .en(en), .weights_w(-31), .pre_spiking(hidden_spike[0]),.spking_value(ex_syn_res[0][1]),.update_en(Output_spike[1]),.learning_rate(16'h0148));
 	
-    synapse ex_syn2_1(.clk(clk), .rst(rst), .en(en), .weights_w(-98), .pre_spiking(hidden_spike[1]),.spking_value(ex_syn_res[1][0]),.update_en(Output_spike[0]),.learning_rate(16'h0148));
-    synapse ex_syn2_2(.clk(clk), .rst(rst), .en(en), .weights_w(40), .pre_spiking(hidden_spike[1]),.spking_value(ex_syn_res[1][1]),.update_en(Output_spike[1]),.learning_rate(16'h0148));
+    synapse ex_syn2_1(.clk(clk), .rst(rst), .en(en), .weights_w(100), .pre_spiking(hidden_spike[1]),.spking_value(ex_syn_res[1][0]),.update_en(Output_spike[0]),.learning_rate(16'h0148));
+    synapse ex_syn2_2(.clk(clk), .rst(rst), .en(en), .weights_w(18), .pre_spiking(hidden_spike[1]),.spking_value(ex_syn_res[1][1]),.update_en(Output_spike[1]),.learning_rate(16'h0148));
 	
-    synapse ex_syn3_1(.clk(clk), .rst(rst), .en(en), .weights_w(-26), .pre_spiking(hidden_spike[2]),.spking_value(ex_syn_res[2][0]),.update_en(Output_spike[0]),.learning_rate(16'h0148));
-    synapse ex_syn3_2(.clk(clk), .rst(rst), .en(en), .weights_w(-19), .pre_spiking(hidden_spike[2]),.spking_value(ex_syn_res[2][1]),.update_en(Output_spike[1]),.learning_rate(16'h0148));
+    synapse ex_syn3_1(.clk(clk), .rst(rst), .en(en), .weights_w(-45), .pre_spiking(hidden_spike[2]),.spking_value(ex_syn_res[2][0]),.update_en(Output_spike[0]),.learning_rate(16'h0148));
+    synapse ex_syn3_2(.clk(clk), .rst(rst), .en(en), .weights_w(-16), .pre_spiking(hidden_spike[2]),.spking_value(ex_syn_res[2][1]),.update_en(Output_spike[1]),.learning_rate(16'h0148));
 	
-    synapse ex_syn4_1(.clk(clk), .rst(rst), .en(en), .weights_w(-77), .pre_spiking(hidden_spike[3]),.spking_value(ex_syn_res[3][0]),.update_en(Output_spike[0]),.learning_rate(16'h0148));
-    synapse ex_syn4_2(.clk(clk), .rst(rst), .en(en), .weights_w(-76), .pre_spiking(hidden_spike[3]),.spking_value(ex_syn_res[3][1]),.update_en(Output_spike[1]),.learning_rate(16'h0148));
+    synapse ex_syn4_1(.clk(clk), .rst(rst), .en(en), .weights_w(66), .pre_spiking(hidden_spike[3]),.spking_value(ex_syn_res[3][0]),.update_en(Output_spike[0]),.learning_rate(16'h0148));
+    synapse ex_syn4_2(.clk(clk), .rst(rst), .en(en), .weights_w(62), .pre_spiking(hidden_spike[3]),.spking_value(ex_syn_res[3][1]),.update_en(Output_spike[1]),.learning_rate(16'h0148));
 	
 	
     assign after_sum[0] = ex_syn_res[0][0] + ex_syn_res[1][0] + ex_syn_res[2][0] + ex_syn_res[3][0];
