@@ -84,7 +84,6 @@ module input_neuron #(
     input wire en,
     
 	 input wire[11:0] Sensor_input,
-	 input wire[9:0] Material_type,
 	 
 	 output reg [7:0] Pre_spike
 	 

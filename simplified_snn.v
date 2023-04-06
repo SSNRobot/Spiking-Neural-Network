@@ -10,7 +10,7 @@ module simplified_snn #(
 	 input wire[11:0] Sensor_input_ml,
 	 input wire[11:0] Sensor_input_mr,
 	 input wire[11:0] Sensor_input_fr,
-	 output wire[EXCNUM - 1 : 0] Output_spike
+	 output wire[1 : 0] Output_spike
 	 
     );
     wire [3 : 0] hidden_spike;
@@ -32,17 +32,12 @@ module simplified_snn #(
     end
     wire en_for_initweights;
     assign en_for_initweights = weights_en ^ en;
-	 
-    assign Material_type[0] = 600;
-    assign Material_type[1] = 3000;
-    assign Material_type[2] = 3000;
-    assign Material_type[3] = 600;
       
 	 
-    input_neuron Far_Left (clk,rst,en,Sensor_input_fl,Material_type[0],Pre_spike[0]);
-    input_neuron Mid_Left (clk,rst,en,Sensor_input_ml,Material_type[1],Pre_spike[1]);
-    input_neuron Mid_Right (clk,rst,en,Sensor_input_mr,Material_type[2],Pre_spike[2]);
-    input_neuron Far_Right (clk,rst,en,Sensor_input_fr,Material_type[3],Pre_spike[3]);
+    input_neuron Far_Left (clk,rst,en,Sensor_input_fl,Pre_spike[0]);
+    input_neuron Mid_Left (clk,rst,en,Sensor_input_ml,Pre_spike[1]);
+    input_neuron Mid_Right (clk,rst,en,Sensor_input_mr,Pre_spike[2]);
+    input_neuron Far_Right (clk,rst,en,Sensor_input_fr,Pre_spike[3]);
     
 
     synapse syn1_1 (.clk(clk), .rst(rst), .en(en), .weights_w(-59), .pre_spiking(Pre_spike[0]),.spking_value(synapses_results[0][0]),.update_en(hidden_spike[0]),.learning_rate(16'h0148));
