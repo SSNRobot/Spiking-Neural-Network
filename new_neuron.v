@@ -21,7 +21,7 @@ module exc_neuron  #(   //output neuron
     
   
 
-	 localparam signed threshold = 16'h0960;//16'h00F0;  //16 bit hex number
+	 localparam signed threshold = 16'h0960;//16'h0960;//16'h00F0;  //16 bit hex number
 	 reg [15 : 0] refractory_cnt = 16'd0;
 //	 reg refractory_en;
 	 

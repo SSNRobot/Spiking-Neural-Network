@@ -1,0 +1,47 @@
+-- Author: Alex Pippin
+-- Revision: 3/21/2023
+-- Description:
+--     This block counts the rising edges of the input signal then updates
+--     the output count on the rising edge of the reset signal. The rising
+--     edge of the reset signal also resets the current count to 0.
+
+SUBDESIGN RE_Counter (
+    inp, update, clk    :INPUT;
+    counter[9..0]        :OUTPUT;
+)
+VARIABLE
+    mach_count        :MACHINE WITH STATES (low_count, count_state, high_count);
+    mach_update        :MACHINE WITH STATES (low_update, update_state, high_update);
+    count[9..0]    :NODE;
+BEGIN
+    mach_count.clk = clk;
+    mach_update.clk = clk;
+
+    CASE mach_count IS
+        WHEN low_count =>
+            IF inp THEN        -- input = HIGH
+                mach_count = count_state;
+            END IF;
+        WHEN count_state =>    -- increase count
+            count = count + 1;
+            mach_count = high_count;
+        WHEN high_count =>
+            IF not(inp) THEN    -- input = LOW
+                mach_count = low_count;
+            END IF;
+    END CASE;
+
+    CASE mach_update IS
+        WHEN low_update =>
+            IF inp THEN        -- input = HIGH
+                mach_update = update_state;
+            END IF;
+        WHEN update_state =>    -- increase count
+            counter = count;
+            mach_update = high_update;
+        WHEN high_update =>
+            IF not(inp) THEN    -- input = LOW
+                mach_update = low_update;
+            END IF;
+    END CASE;
+END;

@@ -1,0 +1,40 @@
+-- Author: Alex Pippin
+-- Revision: 3/23/2023
+-- Description:
+-- 	This block takes in the PWM duty cycle control count, decides if
+-- 	this speed is less than the cutoff speed or not, then outputs the
+-- 	appropriate drive controls and PWM signal.
+
+SUBDESIGN MotorDriver (
+	DC[13..0], clk		:INPUT;
+	IN1, IN2, PWM		:OUTPUT;
+)
+VARIABLE
+	clk_10kHz[13..0]	:DFF;
+	DC_actual[13..0]	:NODE;
+BEGIN
+	IF DC[] < 515 THEN	-- BRAKE SIGNAL OVERRIDE
+		IN1 = GND;
+		IN2 = GND;
+		DC_actual[] = 0;
+	ELSE						-- DRIVE FORWARD
+		IN1 = VCC;
+		IN2 = GND;
+		DC_actual[] = DC[];
+	END IF;
+	
+	-- PWM CONTROL
+	clk_10kHz[].clk = clk;
+	
+	IF (clk_10kHz[].q < 4999) THEN
+		clk_10kHz[].d = clk_10kHz[].q + 1;
+	ELSE
+		clk_10kHz[].d = 0;
+	END IF;
+	
+	IF clk_10kHz[].q < DC_actual[] THEN
+		PWM = VCC;
+	ELSE
+		PWM = GND;
+	END IF;
+END;

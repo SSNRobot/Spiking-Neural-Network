@@ -1,0 +1,27 @@
+-- Author: Alex Pippin
+-- Revision: 3/21/2023
+-- Description:
+--     This block divides a 50MHz signal down to 5Hz square wave that
+--     is high for 1ms of every 200ms cycle.
+
+SUBDESIGN Reset_5Hz (
+    clk    :INPUT;
+    rst    :OUTPUT;
+)
+VARIABLE
+    clk_5Hz[19..0]    :DFF;
+BEGIN
+    clk_5Hz[].clk = clk;
+
+    IF (clk_5Hz[].q < 999999) THEN
+        clk_5Hz[].d = clk_5Hz[].q + 1;
+    ELSE
+        clk_5Hz[].d = 0;
+    END IF;
+
+    IF clk_5Hz[].q < 5000 THEN
+        rst = VCC;
+    ELSE
+        rst = GND;
+    END IF;
+END;
